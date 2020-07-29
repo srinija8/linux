@@ -1,0 +1,84 @@
+Tuning and maintaining kernel =
+
+While upgrading kernel we will use rpm mostly.
+#uname  –r
+#cat /etc/redhat-release
+If it’s 7.0 go to VM settings and use 7.3
+Iso 7.0   iso7.3
+Connect to cd/dvd in right bottom
+#df -hT
+mount cd/dvd of the latest bersion of iso
+#cd /run/media/root/cd/dvd/
+#cd Packages
+#vim /boot/grub2/grub.cfg
+#rpm –ivh kernal-
+#rpm –ivh kernal.latestversion.release.arch.rpm
+#rpm –ivh kernal.debug-version.release.arch.rpm
+#vim /boot/grub2/grub.cfg
+Reboot
+#uname –r 
+#cat /etc/redhat-release
+ 
+
+Kernel modules = 
+
+If you want to extend the functionality of the kernel without reboot you use kernel modules. Modules are device drivers.
+#lsmod
+/proc/modules
+#modinfo bonding
+#modinfo bonding | more
+#modinfo xfs  == info about xfs 
+#modinfo dm_mirror
+Add a module = #modprob dm_mirror
+Remove the module = modprobe –r dm_mirror
+#rmmod dm_mirror   
+#rminfo dm_mirror === it gives information about device mirror
+Installing new modules = 
+Checks modules forcefully #depmod –v 
+/lib/modules/kernel-version/modules.dep   == 
+Commands to be executes:
+#lsmod | more
+#modinfo bonding   == used to check info about 
+#modinfo bonding | more
+#modprobe –r bonding   == removing 
+#lsmod  		== list of modules present 
+#modinfo bonding
+#modprobe bonding
+#lsmod | more
+#modinfo dm_mirror
+#modprobe –rf bridge  == to remove forcefully
+#rmmod bridge 
+#lsmod 
+#lsmod | more 
+#depmod –v     === module and hardware is installed but kernel is , we can forcefully 
+
+Kernel parameters = 
+
+just discussed about modules, with this added support for software and hardware components to the kernel.
+While system is running state, we can make changes in kernel= run time parameters
+The another element that controls the behavior of the kernel, nothing but parameters.
+With the parameters, how to tune kernel during the system operational
+#systemctl –a  == it will have 1000s of parameters
+#sysctl –w net.ipv4.ip_forward=0
+#sysctl –p
+#cat /etc/sysctl.conf
+#vim /usr/lib/sysctl.d/00-system.conf
+
+Commands to be executed =
+ 1019  systemctl -a
+ 1020  sysctl -a | wc -l
+ 1021  sysctl -a | grep ip.forward
+ 1022  sysctl -w net.ipv4.ip_forward=0
+ 1023  sysctl -a | grep ip.forward
+ 1024  sysctl -p
+ 1025  sysctl -w net.ipv4.ip_forward=1
+ 1026* sysctl -
+ 1027  sysctl -a | grep icmp
+ 1028  sysctl -w net.ipv4.icmp_echo_ignore_all=1
+ 1029  sysctl -w net.ipv4.icmp_echo_ignore_all=0
+ 1030  sysctl -a | grep forward
+ 1031  sysctl -w net.ipv4.ip_forward=0
+ 1032  sysctl -p
+ 1033  cat /etc/sysctl.conf
+ 1034  vim /usr/lib/sysctl.d/00-system.conf
+ 
