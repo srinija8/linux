@@ -1,0 +1,89 @@
+Monitor the system resources = 
+Resources = cpu, memory, swap, process, devices,network.
+Monitoring system resources and reporting their utilization are important system admin tasks.
+monitoring resource tools are = 
+vmstat 		: 	reports virtual memory statistics
+iostat 		: 	reports cpu, device and partition statistics
+mpstat 		: 	reports activities for each available cpu
+nfsiostat	: 	it reports read and write operations on NFS
+cifsiostat	:	it reports read and write operations on CIFS
+pidstat		:	reports statistics for running process
+sar		:	system activities reports
+sadf		:	display the data gathered in various format
+dstat		:	cpu,disk,network,paging and system statistics= more powerful tool than 				vmstat &iostat 
+top		: 	dynamic output	
+pgrep		:	grep the process from ps tables
+netstat		:	network statistics
+ss		:	network statistics
+nmap		:	remote machine network statistics
+ps		:	process status
+we have to install the package to perform all these tasks:commands to be exacuted
+200#yum install sysstat –y
+Sadf:
+201#vim /etc/sysconfig/sysstat 
+202#sadf -s 09:00:00 -e 17:00:00 /var/log/sa/sa16 | more
+203#sadf -d /var/log/sa/sa20 -- -urd -n DEV
+d-report block devices, u- cpu usage, r-memory usage, n- network devices
+204#cd /var/log/sa
+205#ls   
+Dstat:   
+Displays system resource statistics 
+m-Memory, d-disk, n-network, c- cpu , g-reports paging , y-system statistics, s-swap space, p-process statistics, r-read/write statistics
+commands:
+  295  yum install dstat -y
+  296  dstat -cdmn
+  297  dstat –gyprs
+Vmstat:
+It reports virtual memory statistics
+It reports process, memory, swap, paging, blockIO, disk statistics.
+After executing this command, it reports average details since last reboot.
+Process== r-no of runnable process, b-uninterrupted sleep process, swapd-amount of virtual memory used, 
+Memory== free-amount of idle memory, buff-amount of space for buffer, cache-cache memory, 
+swap== si-swap input how much memory you are reading from disk, so-swap output-how much memory you are writing into disk, bi,bo-block in & blockout, in=how many interrupts per second, cs-no of context switching per second, 
+cpu== us-user time, sy-how much time you are spending on kernel code, id-how much time system is in idle value, wa-waiting time-looking for input/output, st-steal value-how much amount of memory stolen from virtual machine.
+Iostat =
+User and nice value come for non kernel code.
+It reports system i/o statistics for devices and partitions.
+Every 3 seconds output will be displayed for iostat.
+Commands:
+#iostat
+#iostat 3
+#iostat 3 5
+Mpstat =
+It is a linux command. It is an utility. Collects and displays information about cpu utilization and performance statistics. If you want to accurately measure cpu utilization.
+We will use processes and cpu utilization dynamically we use `top` command.
+#mpstat
+#mpstat 2 5
+#mpstat –P 1  === processor 1 info
+#mpstat –P 2  === processor 2 info
+Pidstat =
+This tool reports statistics of cpu used by a process and disk usage statistics of a process.
+It will take only running processed.
+#pidstat –p ALL == all the processed
+#pidstat –p 5403
+#pidstat –C “vsftpd”  ==command to display statistics of vsftpd process, c- command/canonical name 
+#pidstat –p 15 –d 1 5 == d-disk usage and 1 is every one second interval and 5 outputs.
+Pgrep= It will display pid of all running processes.
+#pgrep 
+#pgrep vsftpd
+#pgrep vsftpd –l
+#pgrep –u root    == #pgrep –u username
+#pgrep –u username1 , username 2
+#pgrep –u root,srinija       #pgrep –u username1 , username 2
+#pgrep –c –u root,Srinija   == #pgrep –c –u username   c=count,u=userl=list process id and process name
+ss= Display the listening and non-listening ports
+#ss –a  == all the ports both listening and non-listening 
+#ss –l   == only listening ports in your server
+#ss –t  == tcp ports
+#ss –u == udp ports
+#ss –ua == all udp ports
+#ss –lu == all listening udp ports
+#ss –lt == only listening tcp ports
+#ss –la == all tcp ports
+#ss –p == process id of ports
+Nfsiostat = report input and output statistics for network file systems (NFS)
+#nfsiostat
+
+Cifsiostat = reports CIFS statistics.
+#cifsiostat
+
