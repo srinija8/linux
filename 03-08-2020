@@ -1,0 +1,230 @@
+basic file system = 
+
+
+Commands =
+#fdisk
+–l   :- what hard disks are connected.
+Devices. Device mapper. 
+
+#fdisk
+/dev/sdb   :- it will allow you to create
+a partition. 
+
+LAB =
+  461  fdisk -l | more
+
+  462  init 6
+
+  463  fdisk -l | more
+
+  464  fdisk /dev/sdb
+
+  465  partprobe /dev/sdb                   :- inform OS about partition table
+changes
+
+  466  mkfs -t xfs /dev/sdb1
+
+  469  mkdir /storage
+
+  470  mount /dev/sdb1 /storage
+
+  471  cd /storage
+
+  472  ls
+
+  473  cd
+
+  474  cp /root/Desktop/* .
+
+  475  cd /storage
+ 
+476  ls
+
+  504  umount /storage
+
+  508  cd /storage
+
+  509  ls
+
+  510  cd
+
+  511  df -hT
+
+  512  mount /dev/sdb1
+
+  513  mount /dev/sdb1 /storage   
+ :- temporary mount
+
+  514  df -hT
+
+  515  cd /storage
+
+  516  ls
+
+  517  vim /etc/fstab     :- persistent
+mount
+
+
+Psuedo based file system = 
+Lab :
+
+  588 free -m
+
+  589  man free
+
+  590  fdisk /dev/sdb      :- n =t =82 = w
+
+  591  partprobe /dev/sdb
+
+  592  mkswap /dev/sdb7
+
+  593  free -m
+
+  594  swapon /dev/sdb7
+
+  595  free -m
+
+  596  swapoff /dev/sdb7
+
+  597  free -m
+
+  598  swapon /dev/sdb7
+
+  599  free -m
+
+  600  vim /etc/fstab    :- /dev/sdb2 swap swap default 0 0
+
+
+  601  free –m
+
+LUKS Linux unified keysetup =
+Lab :
+  638  fdisk /dev/sdb
+
+  639  partprobe /dev/sdb    :- re read partition table
+
+  640  df -hT
+
+  641  fdisk /dev/sdb
+
+  642   cryptsetup luksFormat /dev/sdb6
+
+  643   cryptsetup luksOpen /dev/sdb6
+
+  644   cryptsetup luksOpen /dev/sdb6 sri
+
+  645  mkfs -t xfs /dev/mapper/sri      :-format
+
+  646  mkdir /secret
+
+  647  mount /dev/mapper/sri /secret  :-mount
+
+  648  cd /secret
+
+  649  ls
+
+  654  cp /root/Desktop/* /secret
+
+  655  cd /secret
+
+  656  ls
+
+  657  cd
+
+  658  umount /secret
+
+  660  mount /dev/mapper/sri /secret
+
+  661  umount /secret
+
+  662  cryptsetup luksClose sri
+
+  663  mount /dev/mapper/sri /secret
+
+  664  cd /secret
+
+  665  ls
+
+  666  cd
+
+  667  mount /dev/mapper/sri /secret
+
+  668  cryptsetup luksOpen sri
+
+  669  mount /dev/mapper/sri /secret
+
+  670  cryptsetup luksOpen /dev/sdb6 sri
+
+  671  mount /dev/mapper/sri /secret
+
+  672  cd /secret
+
+  673  ls
+
+  674  cd
+
+  675  umount /secret
+
+  676  cryptsetup luksClose sri
+
+  677  vim /etc/fstab  :- /dev/mapper/sri              /secret                xfs              defaults              0 0
+
+  678  vim /etc/crypttab :- sri      /dev/sdb6          /root/luks.key
+
+  679  reboot
+
+  680  vim /root/luks.key :- Welcom123
+
+  681  cryptset luksAddKey /dev/mapper/sri /root/luks.key
+
+  682  cryptsetup luksAddKey /dev/mapper/sri /root/luks.key
+
+  683  cryptsetup luksOpen /dev/mapper/sri /root/luks.key
+
+  684  cryptsetup luksOpen sri
+
+  685  cryptsetup luksOpen /dev/mapper sri
+
+  686  cryptsetup luksAddKey /dev/mapper/sri /root/luks.key
+
+  687  mkfs -t xfs /dev/mapper/sri
+
+  688  mount /dev/mapper/sri /secret
+
+  689  cd secret
+
+  690  cd /secret
+
+  691  ls
+
+  692  cd
+
+  693  cryptsetup luksOpen /dev/sdb6 sri
+
+  694  mount /dev/mapper/sri /secret
+
+  695  vim /etc/fstab
+
+  696  fdisk /dev/sdb
+
+  697  vim /etc/crypttab
+
+  698  vim /root/luks.key
+
+  704  cryptsetup luksAddKey /dev/sdb6 /root/luks.key
+
+  705  cryptsetup luksOpen /dev/sdb6 sri
+
+  707  vim /etc/crypttab
+
+  708  vim /root/luks.key
+
+  709  reboot
+
+  710  vim /root/luks.key
+
+  711  reboot
+
+  712  vim /root/luks.key
+
+  713  history
